@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutterspacex/core/model/launch.dart';
+import 'package:flutterspacex/core/model/Launch/launch.dart';
+
 import 'package:flutterspacex/ui/components/image_placeholder.dart';
 
 class LaunchList extends StatelessWidget{

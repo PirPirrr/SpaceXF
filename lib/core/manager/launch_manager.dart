@@ -4,7 +4,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutterspacex/core/manager/api_manager.dart';
-import 'package:flutterspacex/core/model/launch.dart';
+import 'package:flutterspacex/core/model/Launch/launch.dart';
+
 
 class LaunchManager{
   List<Launch>? _launch;
@@ -30,5 +31,15 @@ class LaunchManager{
     } catch (e) {
       debugPrint("Erreur : $e");
     }
+  }
+
+  Future<Launch?> getLaunchDetail(String idLaunch) async{
+    Launch? launch;
+    try{
+      launch = await LaunchManager().getLaunchDetail(idLaunch);
+    }catch(e){
+      print("Error: $e");
+    }
+    return launch;
   }
 }

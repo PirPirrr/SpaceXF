@@ -1,7 +1,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterspacex/core/model/Launch/launch.dart';
 import 'package:flutterspacex/ui/home.dart';
+import 'package:flutterspacex/ui/launch_detail.dart';
 
 import '../main.dart';
 
@@ -25,7 +27,29 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
+      onGenerateRoute: (RouteSettings settings) {
+        var arguments = settings.arguments;
+        switch (settings.name) {
+          case LaunchDetail.route:
+            if (arguments != null && arguments is LaunchDetailArguments) {
+              Launch launch = arguments.launch;
+              return MaterialPageRoute(builder: (_) => LaunchDetail(launch));
+            } else {
+              throw Exception(
+                  "Cette route doit avoir un objet SpotDetailArgument en argument");
+            }
+          default:
+            return unknownRoute();
+        }
+      },
       home: const MyHomePage(title: 'Incoming Launch'),
     );
+  }
+
+  MaterialPageRoute unknownRoute() {
+    return MaterialPageRoute(
+        builder: (_) => const Scaffold(
+          body: Center(child: Text("Route inconnue")),
+        ));
   }
 }
