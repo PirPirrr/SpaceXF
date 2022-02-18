@@ -13,10 +13,19 @@ class Launch{
   String? details;
   String? launchpad;
   String? name;
-  DateTime? dateUTC;
+  DateTime? date_local;
   List<Core>? cores;
   String id;
 
-  Launch({this.links,this.success,this.failures,this.details,this.launchpad,this.name,this.dateUTC,this.cores,required this.id});
+  Launch({this.links,this.success,this.failures,this.details,this.launchpad,this.name,this.date_local,this.cores,required this.id});
+
+  factory Launch.fromJson(Map<String, dynamic> json) =>
+      _$LaunchFromJson(json);
+
+  Map<String, dynamic> toJson() => _$LaunchToJson(this);
+
+
+
+
 
 }
