@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutterspacex/core/manager/api_manager.dart';
 import 'package:flutterspacex/core/model/Launch/launch.dart';
+import 'package:flutterspacex/core/model/Rocket/rocket.dart';
 
 
 class LaunchManager{
@@ -36,10 +37,20 @@ class LaunchManager{
   Future<Launch?> getLaunchDetail(String idLaunch) async{
     Launch? launch;
     try{
-      launch = await LaunchManager().getLaunchDetail(idLaunch);
+      launch = await ApiManager().getOneLaunch(idLaunch);
     }catch(e){
       print("Error: $e");
     }
     return launch;
+  }
+
+  Future<Rocket?> getRocket(String idRocket) async{
+    Rocket? rocket;
+    try{
+      rocket = await ApiManager().getOneRocket(idRocket);
+    }catch(e){
+      print("Error: $e");
+    }
+    return rocket;
   }
 }

@@ -57,7 +57,7 @@ class ApiManager {
 
   Future<Rocket?> getOneRocket(String id) async{
     try{
-      return await dio.get("rockets/$id").then((response) => parseRocket(response.data));
+      return await dio.get("/rockets/$id").then((response) => parseRocket(response.data));
     }catch(e){
       print("Error: $e");
     }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterspacex/core/model/Launch/launch.dart';
 
 import 'package:flutterspacex/ui/components/image_placeholder.dart';
+import 'package:flutterspacex/ui/launch_detail.dart';
 
 class LaunchList extends StatelessWidget{
   final List<Launch> launchs;
@@ -13,8 +14,10 @@ class LaunchList extends StatelessWidget{
     return launchs.isNotEmpty ? ListView.builder(
         itemBuilder: (context,position) {
           Launch launch = launchs[position];
-          print(launch.id);
           return InkWell(
+            onTap: () async{
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) => LaunchDetail(launch)));
+            },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
