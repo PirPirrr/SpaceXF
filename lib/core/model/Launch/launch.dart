@@ -26,8 +26,4 @@ class Launch{
 
   Map<String, dynamic> toJson() => _$LaunchToJson(this);
 
-
-
-
-
 }

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutterspacex/core/model/Launch/launch.dart';
+import 'package:flutterspacex/core/model/Rocket/rocket.dart';
 
 
 
@@ -31,6 +32,13 @@ class ApiManager {
     return Launch.fromJson(json);
   }
 
+  Rocket? parseRocket(dynamic json){
+    if(json == null){
+      return null;
+    }
+    return Rocket.fromJson(json);
+  }
+
   Future<List<Launch>?> getUpcomingLaunch() async {
     try{
       return await dio.get("/launches/upcoming").then((response) => parseListLaunch(response.data));
@@ -41,7 +49,15 @@ class ApiManager {
 
   Future<Launch?> getOneLaunch(String id) async {
     try{
-      return await dio.get("/launches$id").then((response) => parseLaunch(response.data));
+      return await dio.get("/launches/$id").then((response) => parseLaunch(response.data));
+    }catch(e){
+      print("Error: $e");
+    }
+  }
+
+  Future<Rocket?> getOneRocket(String id) async{
+    try{
+      return await dio.get("rockets/$id").then((response) => parseRocket(response.data));
     }catch(e){
       print("Error: $e");
     }
