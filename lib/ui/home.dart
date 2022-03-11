@@ -6,6 +6,7 @@ import 'package:flutterspacex/core/manager/launch_manager.dart';
 import 'package:flutterspacex/core/model/Launch/launch.dart';
 import 'package:flutterspacex/core/viewmodel/timer_viewmodel.dart';
 import 'package:flutterspacex/ui/company.dart';
+import 'package:flutterspacex/ui/map.dart';
 import 'package:flutterspacex/ui/pages/launch_list_page.dart';
 import 'package:provider/provider.dart';
 import 'package:sembast/timestamp.dart';
@@ -106,10 +107,11 @@ class MyHomePage extends StatelessWidget {
                       Expanded(
                           child: PageView(
                             controller: _pageController,
-                            physics: NeverScrollableScrollPhysics(),
-                            children: const [
-                              LaunchListPage(),
-                              LaunchListPage(isFromPast: true)
+                            physics: const NeverScrollableScrollPhysics(),
+                            children:  [
+                              const LaunchListPage(),
+                              const LaunchListPage(isFromPast: true),
+                              Maps( listLaunchpad: LaunchManager().launchpad,),
                             ],
                           )
                       ),

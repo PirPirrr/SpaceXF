@@ -7,15 +7,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutterspacex/core/manager/api_manager.dart';
 import 'package:flutterspacex/core/model/Company/spacex.dart';
 import 'package:flutterspacex/core/model/Launch/launch.dart';
+import 'package:flutterspacex/core/model/Launchpad/launchpad.dart';
 import 'package:flutterspacex/core/model/Rocket/rocket.dart';
 
 
 class LaunchManager{
   List<Launch>? _launch;
   List<Launch>? _pastLaunch;
+  List<Launchpad>? _launchpad;
 
   List<Launch> get launchs => _launch ?? [];
   List<Launch> get pastLaunchs => _pastLaunch ?? [];
+  List<Launchpad> get launchpad => _launchpad ?? [];
 
   static final LaunchManager _instance = LaunchManager._internal();
 
@@ -25,9 +28,10 @@ class LaunchManager{
 
   int get _launchListLength => _launch?.length ?? 0;
   int get _pastLaunchListLength => _pastLaunch?.length ?? 0;
+  int get _launchpadListLength => _launchpad?.length ?? 0;
 
   Future<bool> initData() async {
-    await Future.wait([loadAllLaunch(),loadAllPastLaunch()]);
+    await Future.wait([loadAllLaunch(),loadAllPastLaunch(),loadAllLaunchPad()]);
     return true;
   }
 
@@ -46,6 +50,16 @@ class LaunchManager{
       print("Erreur: $e");
     }
   }
+
+  Future<void> loadAllLaunchPad() async {
+    try{
+      _launchpad = await ApiManager().getAllLaunchPad();
+    }catch(e){
+      print("Erreur: $e");
+    }
+  }
+
+
 
   Future<Launch?> getLaunchDetail(String idLaunch) async{
     Launch? launch;

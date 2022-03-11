@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutterspacex/core/model/Company/spacex.dart';
+import 'package:flutterspacex/core/model/Landpad/landpad.dart';
 import 'package:flutterspacex/core/model/Launch/launch.dart';
+import 'package:flutterspacex/core/model/Launchpad/launchpad.dart';
 import 'package:flutterspacex/core/model/Rocket/rocket.dart';
 
 
@@ -26,6 +28,22 @@ class ApiManager {
     return jsonArray.map((json) => Launch.fromJson(json)).toList();
   }
 
+  List<Launchpad>? parseListLaunchPad(List<dynamic>? json){
+    if(json == null){
+      return null;
+    }
+    List<dynamic> jsonArray = json;
+    return jsonArray.map((json) => Launchpad.fromJson(json)).toList();
+  }
+
+  List<Landpad>? parseListLandPad(List<dynamic>? json){
+    if(json == null){
+      return null;
+    }
+    List<dynamic> jsonArray = json;
+    return jsonArray.map((json) => Landpad.fromJson(json)).toList();
+  }
+
   Launch? parseLaunch(dynamic json){
     if(json == null){
       return null;
@@ -47,6 +65,8 @@ class ApiManager {
     return Spacex.fromJson(json);
   }
 
+
+
   Future<List<Launch>?> getUpcomingLaunch() async {
     try{
       return await dio.get("/launches/upcoming").then((response) => parseListLaunch(response.data));
@@ -60,6 +80,22 @@ class ApiManager {
       return await dio.get("/launches/past").then((response) => parseListLaunch(response.data));
     }catch(e){
       print("Error for past launch: $e");
+    }
+  }
+  
+  Future<List<Launchpad>?> getAllLaunchPad() async {
+    try {
+      return await dio.get("/launchpads").then((response) => parseListLaunchPad(response.data));
+    }catch(e){
+      print("Error for launch pad: $e");
+    }
+  }
+
+  Future<List<Landpad>?> getAllLandPad() async {
+    try{
+      return await dio.get("/landpads").then((response) => parseListLandPad(response.data));
+    }catch(e){
+      print("Error for land pad: $e");
     }
   }
 
@@ -94,6 +130,8 @@ class ApiManager {
       print("Error for spacex: $e");
       }
   }
+  
+  
 
 
   
