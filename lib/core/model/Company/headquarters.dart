@@ -17,3 +17,7 @@ class Headquarters{
   Map<String, dynamic> toJson() => _$HeadquartersToJson(this);
 
 }
+
+
+
+

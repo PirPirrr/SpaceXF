@@ -2,6 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterspacex/core/manager/launch_manager.dart';
 import 'package:flutterspacex/core/model/Company/spacex.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/linecons_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 
 class Company extends StatefulWidget{
@@ -116,7 +120,7 @@ class _Company extends State<Company>{
                   ),
                 ),
                 Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
+                    padding: EdgeInsets.fromLTRB(5, 0, 5, 20),
                   child:Text("Description: \n ${spacex.summary} " ,
                     style: const TextStyle(
                       fontSize: 20,
@@ -124,14 +128,48 @@ class _Company extends State<Company>{
                     textAlign: TextAlign.justify,
                   ) ,
                 ),
-                Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                  child: Row(
-                    children: [
-                      Icon()
+                Center(
+                  child:  Row(
+                    children:  [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        child: IconButton(
+                          onPressed:(){
+                            launch(spacex.links?.twitter);
+                          },
+                          icon: const Icon(FontAwesome5.space_shuttle),
+                        )
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        child: IconButton(
+                          onPressed:(){
+                            launch(spacex.links?.elon_twitter);
+                          },
+                          icon: const Icon(FontAwesome5.twitter),
+                        )
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        child: IconButton(
+                          onPressed:(){
+                            launch(spacex.links?.flickr);
+                          },
+                          icon: const Icon(FontAwesome5.flickr),
+                        )
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        child: IconButton(
+                          onPressed:(){
+                            launch(spacex.links?.website);
+                          },
+                          icon: const Icon(Linecons.globe),
+                        )
+                      ),
                     ],
                   ),
-                )
+                ),
               ],
             );
           }else{
