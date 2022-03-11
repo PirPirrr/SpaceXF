@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -10,8 +11,10 @@ import 'package:flutterspacex/core/model/Rocket/rocket.dart';
 
 class LaunchManager{
   List<Launch>? _launch;
+  List<Launch>? _pastLaunch;
 
   List<Launch> get launchs => _launch ?? [];
+  List<Launch> get pastLaunchs => _pastLaunch ?? [];
 
   static final LaunchManager _instance = LaunchManager._internal();
 
@@ -20,9 +23,10 @@ class LaunchManager{
   LaunchManager._internal();
 
   int get _launchListLength => _launch?.length ?? 0;
+  int get _pastLaunchListLength => _pastLaunch?.length ?? 0;
 
   Future<bool> initData() async {
-    await Future.wait([loadAllLaunch()]);
+    await Future.wait([loadAllLaunch(),loadAllPastLaunch()]);
     return true;
   }
 
@@ -34,10 +38,28 @@ class LaunchManager{
     }
   }
 
+  Future<void> loadAllPastLaunch() async {
+    try{
+      _pastLaunch = await ApiManager().getPastLaunch();
+    }catch(e){
+      print("Erreur: $e");
+    }
+  }
+
   Future<Launch?> getLaunchDetail(String idLaunch) async{
     Launch? launch;
     try{
       launch = await ApiManager().getOneLaunch(idLaunch);
+    }catch(e){
+      print("Error: $e");
+    }
+    return launch;
+  }
+
+  Future<Launch?> getNextLaunch() async{
+    Launch? launch;
+    try{
+      launch = await ApiManager().getNextLaunch();
     }catch(e){
       print("Error: $e");
     }
@@ -53,4 +75,7 @@ class LaunchManager{
     }
     return rocket;
   }
+
+
+
 }

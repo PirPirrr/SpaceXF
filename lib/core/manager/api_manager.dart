@@ -43,7 +43,15 @@ class ApiManager {
     try{
       return await dio.get("/launches/upcoming").then((response) => parseListLaunch(response.data));
     }catch(e){
-      print("Error: $e");
+      print("Error for all launch: $e");
+    }
+  }
+
+  Future<List<Launch>?> getPastLaunch() async {
+    try {
+      return await dio.get("/launches/past").then((response) => parseListLaunch(response.data));
+    }catch(e){
+      print("Error for past launch: $e");
     }
   }
 
@@ -51,7 +59,15 @@ class ApiManager {
     try{
       return await dio.get("/launches/$id").then((response) => parseLaunch(response.data));
     }catch(e){
-      print("Error: $e");
+      print("Error for one launch: $e");
+    }
+  }
+  
+  Future<Launch?> getNextLaunch()async{
+    try{
+      return await dio.get("/launches/next").then((response) => parseLaunch(response.data));
+    }catch(e){
+      print("Error for next launch: $e");
     }
   }
 
@@ -59,8 +75,12 @@ class ApiManager {
     try{
       return await dio.get("/rockets/$id").then((response) => parseRocket(response.data));
     }catch(e){
-      print("Error: $e");
+      print("Error for one rockets: $e");
     }
   }
+
+
+  
+  
 
 }

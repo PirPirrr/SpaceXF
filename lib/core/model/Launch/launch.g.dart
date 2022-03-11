@@ -25,8 +25,8 @@ Launch _$LaunchFromJson(Map<String, dynamic> json) => $checkedCreate(
           launchpad: $checkedConvert('launchpad', (v) => v as String?),
           name: $checkedConvert('name', (v) => v as String?),
           rocket: $checkedConvert('rocket', (v) => v as String),
-          date_local: $checkedConvert('date_local',
-              (v) => v == null ? null : DateTime.parse(v as String)),
+          date_local:
+              $checkedConvert('date_local', (v) => DateTime.parse(v as String)),
           cores: $checkedConvert(
               'cores',
               (v) => (v as List<dynamic>?)
@@ -46,7 +46,7 @@ Map<String, dynamic> _$LaunchToJson(Launch instance) => <String, dynamic>{
       'launchpad': instance.launchpad,
       'name': instance.name,
       'rocket': instance.rocket,
-      'date_local': instance.date_local?.toIso8601String(),
+      'date_local': instance.date_local.toIso8601String(),
       'cores': instance.cores?.map((e) => e.toJson()).toList(),
       'id': instance.id,
     };
