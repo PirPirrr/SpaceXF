@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutterspacex/core/manager/api_manager.dart';
+import 'package:flutterspacex/core/model/Company/spacex.dart';
 import 'package:flutterspacex/core/model/Launch/launch.dart';
 import 'package:flutterspacex/core/model/Rocket/rocket.dart';
 
@@ -74,6 +75,16 @@ class LaunchManager{
       print("Error: $e");
     }
     return rocket;
+  }
+
+  Future<Spacex?> getSpacex() async {
+    Spacex? spacex;
+    try{
+      spacex = await ApiManager().getSpacex();
+    }catch(e){
+      print("Error: $e");
+    }
+    return spacex;
   }
 
 

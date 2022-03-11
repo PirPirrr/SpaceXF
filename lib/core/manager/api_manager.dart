@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutterspacex/core/model/Company/spacex.dart';
 import 'package:flutterspacex/core/model/Launch/launch.dart';
 import 'package:flutterspacex/core/model/Rocket/rocket.dart';
 
@@ -39,6 +40,13 @@ class ApiManager {
     return Rocket.fromJson(json);
   }
 
+  Spacex? parseSpacex(dynamic json){
+    if(json == null){
+      return null;
+    }
+    return Spacex.fromJson(json);
+  }
+
   Future<List<Launch>?> getUpcomingLaunch() async {
     try{
       return await dio.get("/launches/upcoming").then((response) => parseListLaunch(response.data));
@@ -77,6 +85,14 @@ class ApiManager {
     }catch(e){
       print("Error for one rockets: $e");
     }
+  }
+
+  Future<Spacex?> getSpacex() async {
+    try{
+      return await dio.get("/company").then((response) => parseSpacex(response.data));
+    }catch(e){
+      print("Error for spacex: $e");
+      }
   }
 
 

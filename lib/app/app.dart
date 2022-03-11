@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterspacex/core/model/Launch/launch.dart';
+import 'package:flutterspacex/ui/company.dart';
 import 'package:flutterspacex/ui/home.dart';
 import 'package:flutterspacex/ui/launch_detail.dart';
 
@@ -38,11 +39,13 @@ class MyApp extends StatelessWidget {
               throw Exception(
                   "Cette route doit avoir un objet SpotDetailArgument en argument");
             }
+          case Company.route:
+            return MaterialPageRoute(builder: (_) => Company(title: "Informations"));
           default:
             return unknownRoute();
         }
       },
-      home: const MyHomePage(title: 'Incoming Launch'),
+      home: const MyHomePage(title: 'SpaceX'),
     );
   }
 

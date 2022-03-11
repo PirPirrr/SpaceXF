@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterspacex/core/manager/launch_manager.dart';
 import 'package:flutterspacex/core/model/Launch/launch.dart';
+import 'package:flutterspacex/ui/company.dart';
 import 'package:flutterspacex/ui/pages/launch_list_page.dart';
 import 'package:sembast/timestamp.dart';
 
@@ -44,9 +45,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
         appBar: AppBar(
-          // Here we take the value from the HomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
           title: Text(widget.title),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.info,
+                color: Colors.white,
+              ),
+              onPressed: () async{
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) =>Company(title: "Informations")));
+              }
+            )
+          ],
         ),
         bottomNavigationBar: BottomNavigationBar(
           items: const [
@@ -65,10 +75,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.blue,
                 )),
             BottomNavigationBarItem(
-                label: "SpaceX",
-                icon: Icon(Icons.info),
+                label: "Map",
+                icon: Icon(Icons.map),
                 activeIcon: Icon(
-                  Icons.info,
+                  Icons.map,
                   color: Colors.blue,
                 )),
           ],
@@ -100,6 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   Expanded(
                       child: PageView(
                         controller: _pageController,
+                        physics: NeverScrollableScrollPhysics(),
                         children: const [
                           LaunchListPage(),
                           LaunchListPage(isFromPast: true)
