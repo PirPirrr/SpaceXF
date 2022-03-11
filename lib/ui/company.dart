@@ -93,11 +93,30 @@ class _Company extends State<Company>{
                           ),
                         ],
                       ),
+                      Row(
+                        children: [
+                          const Icon(Icons.location_city),
+                          Text(spacex.headquarters?.city ?? "Inconnu",
+                            style: const TextStyle(
+                              fontSize: 25,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text("Adresse: ${spacex.headquarters?.address} ",
+                            style: const TextStyle(
+                              fontSize: 25,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
                 Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                    padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
                   child:Text("Description: \n ${spacex.summary} " ,
                     style: const TextStyle(
                       fontSize: 20,
@@ -105,6 +124,14 @@ class _Company extends State<Company>{
                     textAlign: TextAlign.justify,
                   ) ,
                 ),
+                Padding(
+                    padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+                  child: Row(
+                    children: [
+                      Icon()
+                    ],
+                  ),
+                )
               ],
             );
           }else{

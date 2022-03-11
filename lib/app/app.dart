@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             return unknownRoute();
         }
       },
-      home: const MyHomePage(title: 'SpaceX'),
+      home:  MyHomePage(title: 'SpaceX'),
     );
   }
 
