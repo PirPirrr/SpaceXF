@@ -21,15 +21,19 @@ class LaunchList extends StatelessWidget{
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+
                 SizedBox(
                   width: 100,
                   height: 100,
-                  child: Image.network(
-                    launch.links?.patch?.small ?? '',
-                    fit: BoxFit.cover,
-                    errorBuilder: (context,child,stack){
-                      return const ImagePlaceholder();
-                    },
+                  child: Hero(
+                    tag: launch.name ?? "",
+                    child: Image.network(
+                      launch.links?.patch?.small ?? '',
+                      fit: BoxFit.cover,
+                      errorBuilder: (context,child,stack){
+                        return const ImagePlaceholder();
+                      },
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -51,6 +55,12 @@ class LaunchList extends StatelessWidget{
                         ),
                       ],
                     )
+                ),
+                IconButton(
+                  icon: const Icon(Icons.favorite_border),
+                  onPressed: (){
+
+                  },
                 )
               ],
             ),

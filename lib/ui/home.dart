@@ -111,7 +111,10 @@ class MyHomePage extends StatelessWidget {
                             children:  [
                               const LaunchListPage(),
                               const LaunchListPage(isFromPast: true),
-                              Maps( listLaunchpad: LaunchManager().launchpad,),
+                              Maps(
+                                listLaunchpad: LaunchManager().launchpad,
+                              listLandpad: LaunchManager().landpad,
+                              ),
                             ],
                           )
                       ),

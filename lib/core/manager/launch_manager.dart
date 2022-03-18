@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutterspacex/core/manager/api_manager.dart';
 import 'package:flutterspacex/core/model/Company/spacex.dart';
+import 'package:flutterspacex/core/model/Landpad/landpad.dart';
 import 'package:flutterspacex/core/model/Launch/launch.dart';
 import 'package:flutterspacex/core/model/Launchpad/launchpad.dart';
 import 'package:flutterspacex/core/model/Rocket/rocket.dart';
@@ -15,10 +16,12 @@ class LaunchManager{
   List<Launch>? _launch;
   List<Launch>? _pastLaunch;
   List<Launchpad>? _launchpad;
+  List<Landpad>? _landpad;
 
   List<Launch> get launchs => _launch ?? [];
   List<Launch> get pastLaunchs => _pastLaunch ?? [];
   List<Launchpad> get launchpad => _launchpad ?? [];
+  List<Landpad> get landpad => _landpad ?? [];
 
   static final LaunchManager _instance = LaunchManager._internal();
 
@@ -29,9 +32,15 @@ class LaunchManager{
   int get _launchListLength => _launch?.length ?? 0;
   int get _pastLaunchListLength => _pastLaunch?.length ?? 0;
   int get _launchpadListLength => _launchpad?.length ?? 0;
+  int get _landpadListLength => _landpad?.length ?? 0;
 
   Future<bool> initData() async {
-    await Future.wait([loadAllLaunch(),loadAllPastLaunch(),loadAllLaunchPad()]);
+    await Future.wait([
+      loadAllLaunch(),
+      loadAllPastLaunch(),
+      loadAllLaunchPad(),
+      loadAllLandpad()]
+    );
     return true;
   }
 
@@ -47,7 +56,7 @@ class LaunchManager{
     try{
       _pastLaunch = await ApiManager().getPastLaunch();
     }catch(e){
-      print("Erreur: $e");
+      debugPrint("Erreur: $e");
     }
   }
 
@@ -55,7 +64,15 @@ class LaunchManager{
     try{
       _launchpad = await ApiManager().getAllLaunchPad();
     }catch(e){
-      print("Erreur: $e");
+      debugPrint("Erreur: $e");
+    }
+  }
+
+  Future<void> loadAllLandpad() async {
+    try{
+      _landpad = await ApiManager().getAllLandPad();
+    }catch(e){
+      debugPrint("Erreur: $e");
     }
   }
 
@@ -66,7 +83,7 @@ class LaunchManager{
     try{
       launch = await ApiManager().getOneLaunch(idLaunch);
     }catch(e){
-      print("Error: $e");
+      debugPrint("Error: $e");
     }
     return launch;
   }
@@ -76,7 +93,7 @@ class LaunchManager{
     try{
       launch = await ApiManager().getNextLaunch();
     }catch(e){
-      print("Error: $e");
+      debugPrint("Error: $e");
     }
     return launch;
   }
@@ -86,7 +103,7 @@ class LaunchManager{
     try{
       rocket = await ApiManager().getOneRocket(idRocket);
     }catch(e){
-      print("Error: $e");
+      debugPrint("Error: $e");
     }
     return rocket;
   }
@@ -96,7 +113,7 @@ class LaunchManager{
     try{
       spacex = await ApiManager().getSpacex();
     }catch(e){
-      print("Error: $e");
+      debugPrint("Error: $e");
     }
     return spacex;
   }

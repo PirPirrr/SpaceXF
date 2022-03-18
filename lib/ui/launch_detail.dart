@@ -59,6 +59,36 @@ class _LaunchDetailState extends State<LaunchDetail>{
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  Hero(
+                      tag: launch.name ?? "",
+                      child: Image.network(
+                        launch.links?.patch?.large ?? '',
+                        fit: BoxFit.cover,
+                        errorBuilder: (context,child,stack){
+                          return const ImagePlaceholder();
+                        },
+                      ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                      launch.details ?? "",
+                    style: const TextStyle(
+                      fontSize: 20,
+                    ),
+                    textAlign: TextAlign.justify,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                      "Rocket : ${launch.nomRocket?.name ?? "Unknow Rocket"}" ,
+                    style: const TextStyle(
+                      fontSize: 30,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
                   Stack(
                     children: [
                       SizedBox(
@@ -82,17 +112,7 @@ class _LaunchDetailState extends State<LaunchDetail>{
                   const SizedBox(
                     height: 16,
                   ),
-                  Padding(
-                      padding: const EdgeInsets.only(left: 16, right: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(
-                          launch.nomRocket?.name ?? ''
-                        ),
-                      ],
-                    ),
-                  )
+
                 ],
               ),
             ),

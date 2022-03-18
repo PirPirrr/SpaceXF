@@ -2,13 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterspacex/core/model/Landpad/landpad.dart';
 import 'package:flutterspacex/core/model/Launchpad/launchpad.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Maps extends StatefulWidget{
   final List<Launchpad> listLaunchpad;
+  final List<Landpad> listLandpad;
 
-  const Maps({Key? key,required this.listLaunchpad}): super(key: key);
+  const Maps({Key? key,required this.listLaunchpad,required this.listLandpad}): super(key: key);
 
   @override
   State<StatefulWidget> createState() => _Maps();
@@ -39,6 +41,20 @@ class _Maps extends State<Maps>{
       );
       markers[markerId] = marker;
     }
+    for(var landpad in widget.listLandpad){
+      MarkerId markerId = MarkerId(landpad.id);
+      Marker marker = Marker(
+          markerId: markerId,
+          position: LatLng(
+            landpad.latitude,
+            landpad.longitude
+          ),
+          infoWindow: InfoWindow(title: landpad.name)
+      );
+      markers[markerId] = marker;
+    }
+
+
     super.initState();
   }
 
