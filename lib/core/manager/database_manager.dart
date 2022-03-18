@@ -4,20 +4,18 @@ import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 
 class DataBaseManager{
-  static const launchStore = "launch-store";
   static DataBaseManager instance = DataBaseManager._internal();
 
   factory DataBaseManager() => instance;
 
   late Database _db;
 
-  final StoreRef<String, Map<String, Object?>> _launchStore = intMapStoreFactory.store(launchStore) as StoreRef<String, Map<String, Object?>>;
-
+  final _launchStore = StoreRef.main();
   DataBaseManager._internal();
 
   Future<void> init() async{
     String dataDirectoryPath = (await getApplicationDocumentsDirectory()).path;
-    _db = (await databaseFactoryIo.openDatabase("$dataDirectoryPath/launch_fav.db"));
+    _db = await databaseFactoryIo.openDatabase("$dataDirectoryPath/launch_fav.db");
   }
 
   Future<void> addLaunch(Launch launch) async =>
@@ -27,9 +25,15 @@ class DataBaseManager{
   Future<void> deleteLaunch(String idLaunch) async =>
       await _launchStore.record(idLaunch).delete(_db);
 
-  Future<void> isFavorite(String idLaunch) async =>
-      await _launchStore.record(idLaunch).delete(_db);
+  Future<bool> isFavorite(String idLaunch) async =>
+      await _launchStore.record(idLaunch).exists(_db);
 
+  Future<void> toggleFavorite(bool isFavorite, Launch launch) =>
+      isFavorite ? deleteLaunch(launch.id) : addLaunch(launch);
+
+  Future<List<Launch>> getFavoriteLaunch() async =>
+      await _launchStore.find(_db).then((records) =>
+      records.map((record) => Launch.fromJson(record.value)).toList());
 
 
 }

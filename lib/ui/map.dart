@@ -9,6 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class Maps extends StatefulWidget{
   final List<Launchpad> listLaunchpad;
   final List<Landpad> listLandpad;
+  static const route = "/map";
 
   const Maps({Key? key,required this.listLaunchpad,required this.listLandpad}): super(key: key);
 
@@ -53,8 +54,6 @@ class _Maps extends State<Maps>{
       );
       markers[markerId] = marker;
     }
-
-
     super.initState();
   }
 
@@ -62,6 +61,9 @@ class _Maps extends State<Maps>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Map"),
+      ),
       body: GoogleMap(
         mapType: MapType.hybrid,
         initialCameraPosition: _kGooglePlex,

@@ -1,10 +1,13 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterspacex/core/manager/launch_manager.dart';
 import 'package:flutterspacex/core/model/Launch/launch.dart';
 import 'package:flutterspacex/ui/company.dart';
 import 'package:flutterspacex/ui/home.dart';
 import 'package:flutterspacex/ui/launch_detail.dart';
+import 'package:flutterspacex/ui/map.dart';
+import 'package:flutterspacex/ui/parameter.dart';
 
 import '../main.dart';
 
@@ -41,6 +44,13 @@ class MyApp extends StatelessWidget {
             }
           case Company.route:
             return MaterialPageRoute(builder: (_) => Company(title: "Informations"));
+          case Maps.route:
+            return MaterialPageRoute(builder: (_) => Maps(
+              listLaunchpad: LaunchManager().launchpad,
+              listLandpad: LaunchManager().landpad,
+            ),);
+          case Parameter.route:
+            return MaterialPageRoute(builder: (_) => const Parameter());
           default:
             return unknownRoute();
         }

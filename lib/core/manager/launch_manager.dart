@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutterspacex/core/manager/api_manager.dart';
+import 'package:flutterspacex/core/manager/database_manager.dart';
 import 'package:flutterspacex/core/model/Company/spacex.dart';
 import 'package:flutterspacex/core/model/Landpad/landpad.dart';
 import 'package:flutterspacex/core/model/Launch/launch.dart';
@@ -14,11 +15,13 @@ import 'package:flutterspacex/core/model/Rocket/rocket.dart';
 
 class LaunchManager{
   List<Launch>? _launch;
+  List<Launch>? _favLaunch;
   List<Launch>? _pastLaunch;
   List<Launchpad>? _launchpad;
   List<Landpad>? _landpad;
 
   List<Launch> get launchs => _launch ?? [];
+  List<Launch> get favLaunch => _favLaunch ?? [];
   List<Launch> get pastLaunchs => _pastLaunch ?? [];
   List<Launchpad> get launchpad => _launchpad ?? [];
   List<Landpad> get landpad => _landpad ?? [];
@@ -30,6 +33,7 @@ class LaunchManager{
   LaunchManager._internal();
 
   int get _launchListLength => _launch?.length ?? 0;
+  int get _favLaunchListLength => _favLaunch?.length ?? 0;
   int get _pastLaunchListLength => _pastLaunch?.length ?? 0;
   int get _launchpadListLength => _launchpad?.length ?? 0;
   int get _landpadListLength => _landpad?.length ?? 0;
@@ -39,7 +43,9 @@ class LaunchManager{
       loadAllLaunch(),
       loadAllPastLaunch(),
       loadAllLaunchPad(),
-      loadAllLandpad()]
+      loadAllLandpad(),
+      loadAllFavoriteLaunch(),
+    ]
     );
     return true;
   }
@@ -48,6 +54,14 @@ class LaunchManager{
     try{
       _launch = await ApiManager().getUpcomingLaunch();
     } catch (e) {
+      debugPrint("Erreur : $e");
+    }
+  }
+
+  Future<void> loadAllFavoriteLaunch()async{
+    try{
+      _favLaunch = await DataBaseManager().getFavoriteLaunch();
+    }catch(e){
       debugPrint("Erreur : $e");
     }
   }
@@ -76,7 +90,24 @@ class LaunchManager{
     }
   }
 
+  bool isLaunchFav(String idLaunch){
+    try{
+      return _favLaunch?.firstWhere((launch) => launch.id == idLaunch) != null;
+    }catch(e){
+      return false;
+    }
+  }
 
+  Future<void> toggleFav(Launch launchToUpdate) async{
+    bool isFav = await DataBaseManager().isFavorite(launchToUpdate.id);
+    await DataBaseManager().toggleFavorite(isFav, launchToUpdate);
+    if(isFav){
+      _favLaunch?.removeWhere((Launch launch) => launch.id == launchToUpdate.id);
+    }else{
+      _favLaunch ??= [];
+      _favLaunch?.add(launchToUpdate);
+    }
+  }
 
   Future<Launch?> getLaunchDetail(String idLaunch) async{
     Launch? launch;

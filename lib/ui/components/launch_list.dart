@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterspacex/core/manager/launch_manager.dart';
 import 'package:flutterspacex/core/model/Launch/launch.dart';
 
 import 'package:flutterspacex/ui/components/image_placeholder.dart';
@@ -6,8 +7,9 @@ import 'package:flutterspacex/ui/launch_detail.dart';
 
 class LaunchList extends StatelessWidget{
   final List<Launch> launchs;
+  final Function(Launch, bool)? onFavChanged;
 
-  const LaunchList({Key? key,required this.launchs}) : super(key: key);
+  const LaunchList({Key? key,required this.launchs,this.onFavChanged}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +19,7 @@ class LaunchList extends StatelessWidget{
           return InkWell(
             onTap: () async{
               Navigator.of(context).push(MaterialPageRoute(builder: (context) => LaunchDetail(launch)));
+
             },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,9 +60,11 @@ class LaunchList extends StatelessWidget{
                     )
                 ),
                 IconButton(
-                  icon: const Icon(Icons.favorite_border),
+                  icon: Icon(LaunchManager().isLaunchFav(launch.id)
+                  ? Icons.favorite
+                  : Icons.favorite_border),
                   onPressed: (){
-
+                    onFavChanged?.call(launch, true);
                   },
                 )
               ],
