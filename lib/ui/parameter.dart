@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutterspacex/app/app.dart';
+import 'package:flutterspacex/core/manager/notifications_manager.dart';
+import 'package:flutterspacex/core/model/Launch/launch.dart';
 
 class Parameter extends StatefulWidget{
   static const route = "/parameter";
@@ -11,7 +15,7 @@ class Parameter extends StatefulWidget{
 }
 
 class _Parameter extends State<Parameter>{
-  bool checked = false;
+
 
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
@@ -27,37 +31,36 @@ class _Parameter extends State<Parameter>{
 
   @override
   Widget build(BuildContext context) {
-
+    bool checked = false;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Paramètres"),
       ),
-      body:Center(
-        child: Column(
-          children: [
-            Row(
-              children:[
-                const Padding(
+      body: Center(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  const Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  child: Text("Notifications"),
-                ),
-                Checkbox(
-                  checkColor: Colors.white,
-                  fillColor: MaterialStateProperty.resolveWith(getColor),
-                  value: checked,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      checked = value!;
-                    });
-                  },
-                ),
-              ],
-            ),
-          ],
-        )
+                    child: Text("Notifications"),
+                  ),
+                  Checkbox(
+                    checkColor: Colors.white,
+                    fillColor: MaterialStateProperty.resolveWith(getColor),
+                    value: checked,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        checked = value!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ],
+          )
 
       ),
     );
   }
-
 }
